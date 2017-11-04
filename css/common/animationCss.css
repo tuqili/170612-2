@@ -20,3 +20,7 @@
     transform: rotate(360deg);
   }
 }
+.moveToTop {
+  animation: moveToTop .6s ease both;
+  -webkit-animation: moveToTop .6s ease both;
+}

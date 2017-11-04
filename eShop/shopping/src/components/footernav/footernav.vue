@@ -22,6 +22,7 @@
     z-index: 103;
     width: 100%;
     height: 45/@rem;
+    background: white;
     .list{
       width: 100%;
       height: 55/@rem;
@@ -34,10 +35,10 @@
           position: relative;
           bottom: 0;
           display: inline-block;
-          width: 42px;
-          height: 40px;
+          width: 42/@rem;
+          height: 40/@rem;
           background: url("./img.png") no-repeat;
-          background-size: 234px 163px;
+          background-size: 234/@rem 163/@rem;
           margin-top: 3/@rem;
         }
         &:nth-of-type(1){

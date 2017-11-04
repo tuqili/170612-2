@@ -73,18 +73,22 @@
 <style lang="less" rel="stylesheet/less">
   @rem: 375/16rem;
   .header{
+    width: 100%;
+    height: 86.6/@rem;
     z-index: 9;
+    background: #000;
     .title{
-      padding: 8/@rem 0;
+      padding: 13/@rem 0;
       height: 41/@rem;
       width: 95%;
       box-sizing: border-box;
       text-align: center;
       display: -webkit-box;
       -webkit-box-align: center;
-      margin: 5/@rem auto;
+      margin: 0 auto 5/@rem;
       .address{
         position: relative;
+        top: 7/@rem;
         font-size: 14px;
         color: #898989;
         i{

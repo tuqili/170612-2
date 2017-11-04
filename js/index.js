@@ -13,7 +13,7 @@ document.addEventListener('touchstart',function(ev){
 
 (function(){
   var width = document.documentElement.clientWidth;  //375
-  var targetW = 640;
+  var targetW = 960;
   var scale = width / targetW;
   var $metaN = $('meta[name="viewport"]');
   $metaN.attr('content','initial-scale='+scale);
@@ -46,6 +46,7 @@ $(function (){
       startY = ev.originalEvent.changedTouches[0].clientY;
     });
 
+
     $(document).on('touchmove',function(ev){
       ev = ev || event;
       var endY = ev.originalEvent.changedTouches[0].clientY;
@@ -61,7 +62,7 @@ $(function (){
           $list.eq(oldFlag).addClass('preCurrent');
           isMove=false;
         }
-        (flag>4)&&(flag=0);
+        (flag<0)&&(flag=4);
         $list.eq(flag).removeClass('isHide');
         $list.eq(flag).addClass('current');
         $list.eq(flag).css({
@@ -90,7 +91,7 @@ $(function (){
     $(document).on('touchend',function(){
       if(distance>0){
         $list.eq(flag).addClass('moveToBottom');
-        $list.eq(oldFlag).addClass('noveFromTOp');
+        $list.eq(oldFlag).addClass('moveFromTop');
         $list.eq(flag).removeClass('current');
         $list.eq(oldFlag).css({
           transform: "translateY(0)"+"scale(1)"
