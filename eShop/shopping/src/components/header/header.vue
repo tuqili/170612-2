@@ -19,7 +19,7 @@
         <img src="./mydope.png" alt="评论">
       </a>
     </div>
-    <div class="find_nav">
+    <div class="find_nav" ref="navWrap">
       <ul>
         <li>
           <a href="javascrip:;">
@@ -65,17 +65,23 @@
 </template>
 
 <script>
+  import BScroll from 'better-scroll'
   export default {
-
+    mounted(){
+      new BScroll(this.$refs.navWrap,{
+        scrollX: true
+      })
+    }
   }
 </script>
 
 <style lang="less" rel="stylesheet/less">
   @rem: 375/16rem;
   .header{
+    position: relative;
     width: 100%;
     height: 86.6/@rem;
-    z-index: 9;
+    z-index: 100;
     background: #000;
     .title{
       padding: 13/@rem 0;

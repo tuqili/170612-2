@@ -20,6 +20,7 @@ export default {
 </script>
 
 <style lang="less" rel="stylesheet/less">
+  /*设计页面 750 则需要用 750/16rem*/
   @rem: 375/16rem;
   html,body{
     height: 100%;

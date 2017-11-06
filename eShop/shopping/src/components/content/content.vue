@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
-    <div class="content" ref="content">
+  <div class="container" ref="contentWrap">
+    <div class="content">
+
       <div class="activity">
         <span></span>
         <span></span>
@@ -8,7 +9,12 @@
       </div>
       <!--无缝滑屏-->
       <div class="carouse-wrapper" >
-        <img src="./lb-1.jpg" alt="轮播图一">
+        <mt-swipe :auto="10000">
+          <mt-swipe-item><img src="./lb-1.jpg" alt="轮播图一"></mt-swipe-item>
+          <mt-swipe-item><img src="./lb-2.jpg" alt="轮播图一"></mt-swipe-item>
+          <mt-swipe-item><img src="./lb-3.jpg" alt="轮播图一"></mt-swipe-item>
+          <mt-swipe-item><img src="./lb-4.jpg" alt="轮播图一"></mt-swipe-item>
+        </mt-swipe>
       </div>
       <div class="bz">
         <img src="./bz.jpg" alt="bz">
@@ -89,7 +95,7 @@
           </div>
         </div>
         <div class="surprise-pro">
-          <div class="swiper-container">
+          <div class="swiper-container" ref="surpriseWrap">
             <ul class="pro-list">
               <li>
                 <div class="pro-block">
@@ -797,26 +803,30 @@
 
 <script>
   import BScroll from 'better-scroll'
+
   export default {
     mounted(){
-      setTimeout(() => {
-        this._initScroll()
-      },1000)
-
-
+      setTimeout( () => {
+        this.scroll = new BScroll(this.$refs.contentWrap,{
+          click: true,
+          scrollbar: true
+        });
+        this.surprise = new BScroll(this.$refs.surpriseWrap,{
+          click: true,
+          scrollbar: true,
+          scrollX: true
+        });
+        console.log(this.scroll.scrollerHeight);
+      },1);
     },
     methods:{
       _initScroll(){
-        console.log(1111111);
 
-
-        this.scroll = new BScroll(this.$refs.content, {
-          click: true
-
-        });
-        console.log(this.scroll);
 
       }
+    },
+    components: {
+
     }
   }
 </script>
@@ -824,60 +834,93 @@
 <style lang="less" rel="stylesheet/less">
   @import "../../common/less/mixins";
   @rem: 375/16rem;
-  .container{
-
-    height: (100%-87/@rem);
-    .content{
+  .container {
+    height: 535/@rem;
+    .content {
       width: 100%;
-      .activity{
-        span{
+      .activity {
+        overflow: hidden;
+        span {
           float: left;
           display: inline-block;
           width: 33.33333333%;
           height: 50/@rem;
-          &:nth-of-type(1){
+          &:nth-of-type(1) {
             background: url("./hd-1.jpg") no-repeat;
             background-size: 100% 100%;
           }
-          &:nth-of-type(2){
+          &:nth-of-type(2) {
             background: url("./hd-2.jpg") no-repeat;
             background-size: 100% 100%;
           }
-          &:nth-of-type(3){
+          &:nth-of-type(3) {
             background: url("./hd-3.jpg") no-repeat;
             background-size: 100% 100%;
           }
 
         }
       }
-      .carouse-wrapper{
-        padding-top: 50/@rem;
+      .carouse-wrapper {
+        /*position: relative;*/
         height: 160/@rem;
+        width: 375/@rem;
         img{
+          width: 100%;
+          height: 100%;
+        }
+        /*.mint-swipe {
           height: 160/@rem;
+          width: 100%;
+          .mint-swipe-item {
+            width: 100%;
+            height: 160/@rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            img {
+              width: 100%;
+            }
+          }
+        }*/
+        .mint-swipe-indicators {
+          position: absolute;
+          top: 130 /@rem;
+          left: 200 /@rem;
+          width: 54/@rem;
+          .mint-swipe-indicator {
+            width: 5 /@rem;
+            height: 5 /@rem;
+            background-color: white;
+            border-radius: 30%;
+            opacity: 1;
+            &.is-active {
+              width: 15 /@rem;
+              transition: .5s width;
+            }
+          }
         }
       }
-      .bz{
+      .bz {
         height: 288/@rem;
-        img{
+        img {
           height: 288/@rem;
         }
       }
-      .productLists{
+      .productLists {
         height: 175.5/@rem;
-        .row{
+        .row {
           height: 50%;
           display: -webkit-box;
           display: flex;
-          .item{
-            width:  0;
+          .item {
+            width: 0;
             -webkit-box-flex: 1;
-            flex:  1;
-            a{
+            flex: 1;
+            a {
               height: 100%;
               width: 100%;
               display: inline-block;
-              img{
+              img {
                 height: 100%;
                 width: 100%;
               }
@@ -886,60 +929,60 @@
 
         }
       }
-      .strategy1{
+      .strategy1 {
         width: 100%;
         height: 50/@rem;
-        a{
+        a {
           height: 100%;
           display: block;
-          img{
+          img {
             width: 100%;
             height: 100%;
           }
         }
       }
-      .strategy2{
+      .strategy2 {
         width: 100%;
         height: 150/@rem;
-        a{
+        a {
           height: 100%;
           display: block;
-          img{
+          img {
             width: 100%;
             height: 100%;
           }
         }
       }
-      .surprise{
+      .surprise {
         width: 100%;
         height: 192/@rem;
-        .surprise-tit{
+        .surprise-tit {
           position: relative;
           box-sizing: border-box;
           padding: 10/@rem;
           width: 100%;
           height: 60/@rem;
-          .logo{
+          .logo {
             width: 85/@rem;
             height: 24/@rem;
-            img{
+            img {
               width: 100%;
               height: 100%;
               margin-left: -15/@rem;
             }
           }
-          .text{
+          .text {
             font-size: 13px;
             margin-top: 1/@rem;
             margin-left: 10/@rem;
           }
-          .time{
+          .time {
             width: 83/@rem;
             height: 20/@rem;
             margin-left: 5/@rem;
-            span{
+            span {
               font-size: 12px;
-              &:nth-child(odd){
+              &:nth-child(odd) {
                 display: inline-block;
                 width: 20/@rem;
                 height: 20/@rem;
@@ -948,7 +991,7 @@
                 padding-top: 2/@rem;
                 border: 1px solid;
               }
-              &:nth-child(even){
+              &:nth-child(even) {
                 display: inline-block;
                 padding-top: 2/@rem;
                 width: 3/@rem;
@@ -958,55 +1001,55 @@
               }
             }
           }
-          .more{
+          .more {
             width: 135/@rem;
             height: 40/@rem;
             position: absolute;
             top: 2/@rem;
             right: -8/@rem;
-            a{
+            a {
               display: block;
               text-align: right;
-              img{
+              img {
                 width: 50%;
                 height: 100%;
               }
             }
 
           }
-          .f1{
+          .f1 {
             float: left;
           }
         }
-        .surprise-pro{
+        .surprise-pro {
           width: 100%;
           height: 131/@rem;
-          .swiper-container{
+          .swiper-container {
             height: 131/@rem;
-            .pro-list{
+            .pro-list {
               height: 131/@rem;
               width: (98/@rem+10/@rem)*5;
-              li{
+              li {
                 float: left;
                 width: 98/@rem;
                 height: 131/@rem;
                 margin-right: 10/@rem;
-                .pro-block{
+                .pro-block {
                   width: 84/@rem;
                   height: 100%;
                   margin: 0 auto;
-                  a{
+                  a {
                     width: 84/@rem;
                     display: inline-block;
                     height: 131/@rem;
-                    .image{
+                    .image {
                       width: 84/@rem;
-                      img{
+                      img {
                         width: 84/@rem;
                         height: 84/@rem;
                       }
                     }
-                    .price{
+                    .price {
                       margin-top: 5/@rem;
                       height: 22/@rem;
                       color: red;
@@ -1014,7 +1057,7 @@
                       text-align: center;
                       line-height: 1.6;
                     }
-                    .cheaper{
+                    .cheaper {
                       line-height: 1.6;
                       text-align: center;
                       font-size: 12px;
@@ -1027,21 +1070,21 @@
           }
         }
       }
-      .pre-sale{
+      .pre-sale {
         height: 62/@rem;
-        a{
-          img{
+        a {
+          img {
             height: 62/@rem;
             width: 100%;
           }
         }
       }
-      .category{
-        background: rgb(255,74,104);
-        .products{
+      .category {
+        background: rgb(255, 74, 104);
+        .products {
           width: 100%;
           height: 304/@rem;
-          .listWrap{
+          .listWrap {
             position: relative;
             box-sizing: border-box;
             padding: 5/@rem 0;
@@ -1049,16 +1092,16 @@
             height: 300/@rem;
             border-radius: 4/@rem;
             margin-left: 4/@rem;
-            .pro-tit{
+            .pro-tit {
               width: 100%;
-              a{
-                img{
+              a {
+                img {
                   width: 366/@rem;
                   height: 40/@rem;
                 }
               }
             }
-            ul{
+            ul {
               position: absolute;
               left: 0;
               top: 40/@rem;
@@ -1066,35 +1109,35 @@
               height: 132/@rem;
               margin: 0 auto;
               background: white;
-              li{
+              li {
                 float: left;
                 width: 25%;
                 height: 70%;
-                a{
+                a {
                   width: 25%;
                   height: 100%;
-                  img{
+                  img {
                     width: 100%;
                     height: 100%;
                   }
-                  p{
+                  p {
                     text-align: center;
                     line-height: 1.6;
                     font-size: 10/@rem;
-                    span{
-                      &:nth-child(1){
+                    span {
+                      &:nth-child(1) {
                         line-height: 1.6;
                         font-size: 12/@rem;
                         color: red;
                       }
-                      &:nth-child(2){
+                      &:nth-child(2) {
                         color: #666;
                       }
                     }
                   }
                 }
               }
-              &:nth-child(2){
+              &:nth-child(2) {
                 position: absolute;
                 left: 0;
                 top: 172/@rem;
@@ -1103,62 +1146,62 @@
           }
         }
       }
-      .dapai1{
+      .dapai1 {
         height: 140/@rem;
-        a{
+        a {
           height: 140/@rem;
-          img{
+          img {
             width: 100%;
             height: 100%;
           }
         }
       }
-      .dapai2{
+      .dapai2 {
         height: 55/@rem;
-        a{
+        a {
           height: 55/@rem;
-          img{
+          img {
             width: 100%;
             height: 100%;
           }
         }
       }
-      .brand{
-        .brand-lists{
+      .brand {
+        .brand-lists {
           height: 200/@rem;
           width: 100%;
-          .item{
+          .item {
             float: left;
             width: 25%;
             height: 100%;
-            a{
+            a {
               display: inline-block;
               width: 100%;
               height: 50%;
-              img{
+              img {
                 width: 100%;
                 height: 100%;
               }
             }
-            &:nth-of-type(4){
-              a{
+            &:nth-of-type(4) {
+              a {
                 height: 100%;
               }
             }
           }
         }
-        .brand-lists1{
+        .brand-lists1 {
           height: 77/@rem;
           width: 100%;
-          .item1{
+          .item1 {
             width: 50%;
             height: 100%;
             float: left;
-            a{
+            a {
               display: inline-block;
               width: 100%;
               height: 100%;
-              img{
+              img {
                 width: 100%;
                 height: 100%;
               }
@@ -1166,60 +1209,60 @@
           }
         }
       }
-      .column{
-        .title{
+      .column {
+        .title {
           width: 100%;
           height: 58/@rem;
-          a{
+          a {
             .a-size();
           }
         }
-        .column-lists{
+        .column-lists {
           height: 294/@rem;
-          .item{
+          .item {
             float: left;
             height: 100%;
             width: 50%;
-            a{
+            a {
               .a-size();
               height: 33.333333333333%;
             }
           }
         }
       }
-      .carnival{
+      .carnival {
         height: 63/@rem;
-        a{
+        a {
           .a-size();
         }
       }
-      .movie{
+      .movie {
         height: 235/@rem;
-        img{
+        img {
           width: 100%;
           height: 100%;
         }
       }
-      .foot{
+      .foot {
         height: 86/@rem;
-        .item{
+        .item {
           padding: 15/@rem 0 5/@rem;
           font-size: 14/@rem;
           line-height: 1.6;
           text-align: center;
           height: 42/@rem;
-          span{
+          span {
             padding-right: 10/@rem;
             color: #333;
-            a{
-              -webkit-tap-highlight-color: rgba(0,0,0,0);
+            a {
+              -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             }
-            &:nth-of-type(1){
+            &:nth-of-type(1) {
               color: red;
             }
           }
         }
-        .banQuan{
+        .banQuan {
           height: 44/@rem;
           text-align: center;
           font-size: 12/@rem;
@@ -1227,5 +1270,6 @@
       }
     }
   }
+
 </style>
 
