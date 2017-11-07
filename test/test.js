@@ -13,3 +13,6 @@ while (--j > -1){
   
 }
 console.log(j);  //-1
+let time = new Date();
+console.log(time);
+console.log(time.getTime());

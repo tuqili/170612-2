@@ -1,26 +1,35 @@
 <template>
   <div class="container" ref="contentWrap">
     <div class="content">
-
       <div class="activity">
+        <img :src="activityImg.image" alt="">
+        <!--<span></span>
         <span></span>
-        <span></span>
-        <span></span>
+        <span></span>-->
       </div>
       <!--无缝滑屏-->
       <div class="carouse-wrapper" >
-        <mt-swipe :auto="10000">
-          <mt-swipe-item><img src="./lb-1.jpg" alt="轮播图一"></mt-swipe-item>
-          <mt-swipe-item><img src="./lb-2.jpg" alt="轮播图一"></mt-swipe-item>
+        <mt-swipe :auto="2000">
+          <mt-swipe-item v-for="(item, index) in carouseImg" :key="index">
+            <img :src="item.image" alt="轮播图一">
+          </mt-swipe-item>
+          <!--<mt-swipe-item><img src="./lb-2.jpg" alt="轮播图一"></mt-swipe-item>
           <mt-swipe-item><img src="./lb-3.jpg" alt="轮播图一"></mt-swipe-item>
-          <mt-swipe-item><img src="./lb-4.jpg" alt="轮播图一"></mt-swipe-item>
+          <mt-swipe-item><img src="./lb-4.jpg" alt="轮播图一"></mt-swipe-item>-->
         </mt-swipe>
       </div>
       <div class="bz">
-        <img src="./bz.jpg" alt="bz">
+        <img :src="bz.image" alt="bz">
       </div>
       <div class="productLists">
-        <div class="row">
+        <ul>
+          <li class="item" v-for="(item, index) in productLists" :key="index">
+            <a href="javascript:;">
+              <img :src="item.image" alt="">
+            </a>
+          </li>
+        </ul>
+        <!--<div class="row">
           <div class="item">
             <a href="javascript:;">
               <img src="./pl-1.jpg" alt="">
@@ -63,170 +72,45 @@
               <img src="./pl-8.jpg" alt="">
             </a>
           </div>
-        </div>
+        </div>-->
       </div>
       <div class="strategy1">
         <a href="javascript:;">
-          <img src="./strategy1.jpg" alt="攻略">
+          <img :src="strategy1.image" alt="攻略">
         </a>
       </div>
       <div class="strategy2">
         <a href="javascript:;">
-          <img src="./strategy2.jpg" alt="攻略">
+          <img :src="strategy2.image" alt="攻略">
         </a>
       </div>
-      <div class="surprise">
-        <div class="surprise-tit">
-          <div class="f1 logo">
-            <img src="./suprice.png" alt="logo">
-          </div>
-          <div class="f1 text">距离本场结束</div>
-          <div class="f1 time">
-            <span class="f1">00</span>
-            <span class="f1">:</span>
-            <span class="f1">00</span>
-            <span class="f1">:</span>
-            <span class="f1">00</span>
-          </div>
-          <div class="f1 more">
-            <a href="javascript:;">
-              <img src="./more.png" alt="more">
-            </a>
-          </div>
-        </div>
-        <div class="surprise-pro">
-          <div class="swiper-container" ref="surpriseWrap">
-            <ul class="pro-list">
-              <li>
-                <div class="pro-block">
-                  <a href="javascript:;">
-                    <div class="image">
-                      <img src="./pro-1.jpg">
-                    </div>
-                    <div class="price">
-                      <span>￥</span>
-                      <span>1.5</span>
-                    </div>
-                    <p class="cheaper">省￥14.22</p>
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div class="pro-block">
-                  <a href="javascript:;">
-                    <div class="image">
-                      <img src="./pro-2.jpg" alt="">
-                    </div>
-                    <div class="price">
-                      <span>￥</span>
-                      <span>1.5</span>
-                    </div>
-                    <p class="cheaper">省￥14.22</p>
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div class="pro-block">
-                  <a href="javascript:;">
-                    <div class="image">
-                      <img src="./pro-3.jpg" alt="">
-                    </div>
-                    <div class="price">
-                      <span>￥</span>
-                      <span>1.5</span>
-                    </div>
-                    <p class="cheaper">省￥14.22</p>
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div class="pro-block">
-                  <a href="javascript:;">
-                    <div class="image">
-                      <img src="./pro-4.png" alt="">
-                    </div>
-                    <div class="price">
-                      <span>￥</span>
-                      <span>1.5</span>
-                    </div>
-                    <p class="cheaper">省￥14.22</p>
-                  </a>
-                </div>
-              </li>
-              <li>
-                <div class="pro-block">
-                  <a href="javascript:;">
-                    <div class="image">
-                      <img src="./pro-5.jpg" alt="">
-                    </div>
-                    <div class="price">
-                      <span>￥</span>
-                      <span>1.5</span>
-                    </div>
-                    <p class="cheaper">省￥14.22</p>
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <surprise v-if="surprise.goods" :surprise="surprise"></surprise>
       <div class="pre-sale">
         <a href="javascript:;">
-          <img src="./pre-sale.jpg" alt="">
+          <img :src="active.image" alt="">
         </a>
       </div>
       <div class="category">
-        <div class="products">
+        <div class="products" v-for="(product,index) in products" :key="index">
           <div class="listWrap">
             <div class="pro-tit">
               <a href="javascript:;">
-                <img src="./jk-title.jpg" alt="">
+                <img :src="product[0][0].title" alt="">
               </a>
             </div>
             <ul>
-              <li>
+              <li v-for="(item,index1) in product[1]" :key="index1">
                 <a href="javascript:;">
-                  <img src="./jk1.jpg" alt="">
-                  <p>渴望幼犬粮11.4kg</p>
+                  <img :src="item.url" alt="">
+                  <p>{{item.name}}</p>
                   <p>
-                    <span>￥528.0</span>
-                    <span><del>￥628.0</del></span>
-                  </p>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:;">
-                  <img src="./jk2.jpg" alt="">
-                  <p>渴望幼犬粮11.4kg</p>
-                  <p>
-                    <span>￥528.0</span>
-                    <span><del>￥628.0</del></span>
-                  </p>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:;">
-                  <img src="./jk3.jpg" alt="">
-                  <p>渴望幼犬粮11.4kg</p>
-                  <p>
-                    <span>￥528.0</span>
-                    <span><del>￥628.0</del></span>
-                  </p>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:;">
-                  <img src="./jk4.jpg" alt="">
-                  <p>渴望幼犬粮11.4kg</p>
-                  <p>
-                    <span>￥528.0</span>
-                    <span><del>￥628.0</del></span>
+                    <span>￥{{item.price}}</span>
+                    <span><del>￥{{item.oldPrice}}</del></span>
                   </p>
                 </a>
               </li>
             </ul>
-            <ul>
+            <!--<ul>
               <li>
                 <a href="javascript:;">
                   <img src="./jk5.jpg" alt="">
@@ -267,10 +151,10 @@
                   </p>
                 </a>
               </li>
-            </ul>
+            </ul>-->
           </div>
         </div>
-        <div class="products">
+        <!--<div class="products">
           <div class="listWrap">
             <div class="pro-tit">
               <a href="javascript:;">
@@ -553,7 +437,7 @@
           <div class="listWrap">
             <div class="pro-tit">
               <a href="javascript:;">
-                <img src="./zl-title.gif" alt="">
+                <img srczl-title.jpg.gif" alt="">
               </a>
             </div>
             <ul>
@@ -641,29 +525,29 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div>-->
       </div>
       <div class="dapai1">
         <a href="javascript:;">
-          <img src="./dapai.jpg" alt="">
+          <img :src="dapai1.image" alt="">
         </a>
       </div>
       <div class="dapai2">
         <a href="javascript:;">
-          <img src="./dapai2.jpg" alt="">
+          <img :src="dapai2.image" alt="">
         </a>
       </div>
-      <div class="brand">
+      <div class="brand" v-for="(brand,index) in brands" :key="index">
         <div class="brand-lists">
-          <div class="item">
-            <a href="javascript:;">
-              <img src="./img-brand/hw-1.jpg" alt="">
+          <div class="item" v-for="(item1,index1) in brand.content1" :key="index1">
+            <a href="javascript:;" v-for="(item12,index12) in item1" :key="index12">
+              <img :src="item12.image" alt="">
             </a>
-            <a href="javascript:;">
-              <img src="./img-brand/hw-4.jpg" alt="">
-            </a>
+            <!--<a href="javascript:;">
+              <img src="" alt="">
+            </a>-->
           </div>
-          <div class="item">
+          <!--<div class="item">
             <a href="javascript:;">
               <img src="./img-brand/hw-2.jpg" alt="">
             </a>
@@ -683,22 +567,22 @@
             <a href="javascript:;">
               <img src="./img-brand/hw-7.jpg" alt="">
             </a>
-          </div>
+          </div>-->
         </div>
         <div class="brand-lists1">
-          <div class="item1">
-            <a href="javascript:;">
-              <img src="./img-brand/hw-8.jpg" alt="">
+          <div class="item1" v-for="(item2,index2) in brand.content2" :key="index2">
+            <a href="javascript:;" v-for="(item21,index21) in item2" :key="index21">
+              <img :src="item21.image" alt="">
             </a>
           </div>
-          <div class="item1">
+          <!--<div class="item1">
             <a href="javascript:;">
               <img src="./img-brand/hw-9.jpg" alt="">
             </a>
-          </div>
+          </div>-->
         </div>
       </div>
-      <div class="brand">
+      <!--<div class="brand">
         <div class="brand-lists">
           <div class="item">
             <a href="javascript:;">
@@ -742,26 +626,26 @@
             </a>
           </div>
         </div>
-      </div>
+      </div>-->
       <div class="column">
         <div class="title">
           <a href="javascript:;">
-            <img src="./img-column/lm-title.jpg" alt="">
+            <img :src="column.image" alt="">
           </a>
         </div>
         <div class="column-lists">
-          <div class="item">
-            <a href="javascript:;">
-              <img src="./img-column/lm-1.jpg" alt="">
+          <div class="item" v-for="(list,index) in lists" :key="index">
+            <a href="javascript:;" v-for="(item,index1) in list" :key="index1">
+              <img :src="item.image" alt="">
             </a>
-            <a href="javascript:;">
+            <!--<a href="javascript:;">
               <img src="./img-column/lm-3.jpg" alt="">
             </a>
             <a href="javascript:;">
               <img src="./img-column/lm-5.jpg" alt="">
-            </a>
+            </a>-->
           </div>
-          <div class="item">
+          <!--<div class="item">
             <a href="javascript:;">
               <img src="./img-column/lm-2.jpg" alt="">
             </a>
@@ -771,16 +655,25 @@
             <a href="javascript:;">
               <img src="./img-column/lm-6.jpg" alt="">
             </a>
-          </div>
+          </div>-->
         </div>
       </div>
       <div class="carnival">
         <a href="javascript:;">
-          <img src="./kh.jpg" alt="">
+          <img :src="carnival.image" alt="">
         </a>
       </div>
       <div class="movie">
-        <img src="./movie.jpg" alt="">
+        <img :src="movieImg.image"  @click="changeVideo" alt="">
+        <div class="video" v-if="isShow">
+          <div class="control" @click="close">
+            <img src="./close.png" alt="">
+          </div>
+          <video width="100%" height="92%" :src="movieVideo.url" controls></video>
+        </div>
+      </div>
+      <div class="banner">
+        <img :src="banner.image" alt="">
       </div>
       <div class="foot">
         <div class="item">
@@ -803,30 +696,89 @@
 
 <script>
   import BScroll from 'better-scroll'
+  import surprise from '../surprise/surprise.vue'
 
   export default {
-    mounted(){
-      setTimeout( () => {
-        this.scroll = new BScroll(this.$refs.contentWrap,{
-          click: true,
-          scrollbar: true
-        });
-        this.surprise = new BScroll(this.$refs.surpriseWrap,{
-          click: true,
-          scrollbar: true,
-          scrollX: true
-        });
-        console.log(this.scroll.scrollerHeight);
-      },1);
+    props: {
+      home: Object
     },
-    methods:{
-      _initScroll(){
-
+    data(){
+      return{
+        isShow: false,
+        value: [],
+        activityImg: {},
+        carouseImg: [],
+        bz: {},
+        productLists: [],
+        strategy1: {},
+        strategy2: {},
+        surprise: {},
+        active: {},
+        products: {},
+        dapai1: {},
+        dapai2: {},
+        brands: [],
+        column: {},
+        lists: [],
+        carnival: {},
+        movieImg: {},
+        movieVideo: {},
+        banner: {}
 
       }
     },
-    components: {
+    mounted(){
+      setTimeout( () => {
+       this.scroll = new BScroll(this.$refs.contentWrap,{
+       click: true,
+       scrollbar: true
+       });
 
+
+      },1);
+//      console.log('firstPage',this.productLists);
+
+      this.$nextTick(() => {
+        this._initData();
+      })
+    },
+    methods:{
+      _initData(){
+//        console.log('12345',this.dapai2)
+        const Data = this.home;
+        this.value = Data.datas;
+        this.activityImg = this.value[0].value[0];
+        this.carouseImg = this.value[1].value;
+        this.bz = this.value[2].value[0];
+        this.productLists = this.value[3].menus;
+        this.strategy1 = this.value[4].value[0];
+        this.strategy2 = this.value[5].value[0];
+        this.surprise = Data.goods.data;
+        this.active = this.value[7].value[0];
+        this.products = this.value[8].image;
+        this.dapai1 = this.value[13].value[0];
+        this.dapai2 = this.value[14].value[0];
+        this.brands = this.value[15].image;
+        this.column = this.value[16].value[0];
+        this.lists = this.value[17].content_images;
+        this.carnival = this.value[18].value[0];
+        this.movieImg = this.value[19].value.first;
+        this.movieVideo = this.value[19].value.video;
+        this.banner = this.value[20].value[0];
+
+//        console.log(11111111111,this.products[0][0][0].title);
+      },
+
+      changeVideo(){
+        this.isShow = !this.isShow;
+      },
+
+      close(){
+        this.isShow = !this.isShow;
+      }
+    },
+    components: {
+      surprise
     }
   }
 </script>
@@ -836,10 +788,19 @@
   @rem: 375/16rem;
   .container {
     height: 535/@rem;
+    width: 100%;
+    position: absolute;
+    top: 86/@rem;
     .content {
       width: 100%;
       .activity {
-        overflow: hidden;
+        width: 100%;
+        height: 50/@rem;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+        /*overflow: hidden;
         span {
           float: left;
           display: inline-block;
@@ -858,30 +819,15 @@
             background-size: 100% 100%;
           }
 
-        }
+        }*/
       }
       .carouse-wrapper {
-        /*position: relative;*/
         height: 160/@rem;
         width: 375/@rem;
         img{
           width: 100%;
           height: 100%;
         }
-        /*.mint-swipe {
-          height: 160/@rem;
-          width: 100%;
-          .mint-swipe-item {
-            width: 100%;
-            height: 160/@rem;
-            position: absolute;
-            top: 0;
-            left: 0;
-            img {
-              width: 100%;
-            }
-          }
-        }*/
         .mint-swipe-indicators {
           position: absolute;
           top: 130 /@rem;
@@ -908,14 +854,12 @@
       }
       .productLists {
         height: 175.5/@rem;
-        .row {
-          height: 50%;
-          display: -webkit-box;
-          display: flex;
+        ul {
+          height: 100%;
           .item {
-            width: 0;
-            -webkit-box-flex: 1;
-            flex: 1;
+            float: left;
+            height: 50%;
+            width: 93.5/@rem;
             a {
               height: 100%;
               width: 100%;
@@ -953,123 +897,7 @@
           }
         }
       }
-      .surprise {
-        width: 100%;
-        height: 192/@rem;
-        .surprise-tit {
-          position: relative;
-          box-sizing: border-box;
-          padding: 10/@rem;
-          width: 100%;
-          height: 60/@rem;
-          .logo {
-            width: 85/@rem;
-            height: 24/@rem;
-            img {
-              width: 100%;
-              height: 100%;
-              margin-left: -15/@rem;
-            }
-          }
-          .text {
-            font-size: 13px;
-            margin-top: 1/@rem;
-            margin-left: 10/@rem;
-          }
-          .time {
-            width: 83/@rem;
-            height: 20/@rem;
-            margin-left: 5/@rem;
-            span {
-              font-size: 12px;
-              &:nth-child(odd) {
-                display: inline-block;
-                width: 20/@rem;
-                height: 20/@rem;
-                font-size: 13px;
-                text-align: center;
-                padding-top: 2/@rem;
-                border: 1px solid;
-              }
-              &:nth-child(even) {
-                display: inline-block;
-                padding-top: 2/@rem;
-                width: 3/@rem;
-                height: 16/@rem;
-                font-weight: 700;
-                margin: 0 3/@rem;
-              }
-            }
-          }
-          .more {
-            width: 135/@rem;
-            height: 40/@rem;
-            position: absolute;
-            top: 2/@rem;
-            right: -8/@rem;
-            a {
-              display: block;
-              text-align: right;
-              img {
-                width: 50%;
-                height: 100%;
-              }
-            }
 
-          }
-          .f1 {
-            float: left;
-          }
-        }
-        .surprise-pro {
-          width: 100%;
-          height: 131/@rem;
-          .swiper-container {
-            height: 131/@rem;
-            .pro-list {
-              height: 131/@rem;
-              width: (98/@rem+10/@rem)*5;
-              li {
-                float: left;
-                width: 98/@rem;
-                height: 131/@rem;
-                margin-right: 10/@rem;
-                .pro-block {
-                  width: 84/@rem;
-                  height: 100%;
-                  margin: 0 auto;
-                  a {
-                    width: 84/@rem;
-                    display: inline-block;
-                    height: 131/@rem;
-                    .image {
-                      width: 84/@rem;
-                      img {
-                        width: 84/@rem;
-                        height: 84/@rem;
-                      }
-                    }
-                    .price {
-                      margin-top: 5/@rem;
-                      height: 22/@rem;
-                      color: red;
-                      font-size: 14px;
-                      text-align: center;
-                      line-height: 1.6;
-                    }
-                    .cheaper {
-                      line-height: 1.6;
-                      text-align: center;
-                      font-size: 12px;
-                      color: #999;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
       .pre-sale {
         height: 62/@rem;
         a {
@@ -1106,19 +934,19 @@
               left: 0;
               top: 40/@rem;
               width: 366/@rem;
-              height: 132/@rem;
+              height: 264/@rem;
               margin: 0 auto;
               background: white;
               li {
                 float: left;
                 width: 25%;
-                height: 70%;
+                height: 50%;
                 a {
                   width: 25%;
                   height: 100%;
                   img {
                     width: 100%;
-                    height: 100%;
+                    height: 70%;
                   }
                   p {
                     text-align: center;
@@ -1137,7 +965,7 @@
                   }
                 }
               }
-              &:nth-child(2) {
+              &:nth-of-type(2) {
                 position: absolute;
                 left: 0;
                 top: 172/@rem;
@@ -1238,7 +1066,35 @@
       }
       .movie {
         height: 235/@rem;
+        position: relative;
         img {
+          width: 100%;
+          height: 100%;
+        }
+        .video{
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          .control{
+            width: 6%;
+            height: 8%;
+            img{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          video{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+          }
+        }
+      }
+      .banner{
+        width: 100%;
+        height: 35.5/@rem;
+        img{
           width: 100%;
           height: 100%;
         }

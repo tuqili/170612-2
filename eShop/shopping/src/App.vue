@@ -1,20 +1,45 @@
 <template>
   <div class="wrap">
-    <shopHeader></shopHeader>
-    <contentBox></contentBox>
-    <footernav></footernav>
+    <shopHeader v-if="home.menus" :home="home"></shopHeader>
+    <footernav v-if="home.menus" :home="home"></footernav>
   </div>
 </template>
 
 <script>
-  import header from './components/header/header.vue'
+
   import footernav from './components/footernav/footernav.vue'
-  import contentBox from './components/content/content.vue'
+  import home from './components/home/home.vue'
+  import header from './components/header/header.vue'
+  import axios from 'axios'
+
 export default {
+  data (){
+    return {
+      home: {},
+      isShow: false
+    }
+  },
+  mounted(){
+    axios.get('/api/home')
+      .then((response) => {
+        let result = response.data;
+//          console.log(response.data);
+        if(result.code === 0){
+          this.home = result.data;
+//          console.log('App中的home：',this.home,result);
+            console.log(this.home.menus);
+        }
+      });
+  },
   components: {
-    'shopHeader': header,
     footernav,
-    contentBox
+    'shopHeader': header,
+    home
+  },
+  methods:{
+    moveTo(index,menu){
+//      console.log(index,menu.menu_name);
+    },
   }
 }
 </script>
@@ -28,9 +53,7 @@ export default {
     .wrap{
       height: 100%;
       overflow: hidden;
-      .content{
-
-      }
+      position: relative;
     }
   }
 
